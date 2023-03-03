@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import chalk from 'chalk'
 import figlet from 'figlet'
 import gradient from 'gradient-string'
@@ -12,12 +13,18 @@ dotenv.config()
 
 const sleep = (ms = 1000) => new Promise((resolve) => setTimeout(resolve, ms))
 
+const modes = {
+  regular: {
+    systemPrompt:
+      "You are Epitek an informative assistant. You only present facts you are sure about. If you don't know the answer, you say so. You try present condense facts to help out your user.",
+  },
+}
+
 async function main() {
   const configuration = new Configuration({
     apiKey: process.env.OPENAI_API_KEY,
   })
   const openai = new OpenAIApi(configuration)
-  const rl = readline.createInterface({ input, output })
 
   console.log(
     gradient.pastel.multiline(
@@ -31,20 +38,31 @@ async function main() {
     ),
     '\n'
   )
-  console.log(chalk.green('Hello I am Epitek! I am here to help you!'), '\n')
 
-  // const { mode } = await inquirer.prompt({
-  //   type: 'list',
-  //   name: 'mode',
-  //   message: 'Select mode',
-  //   choices: ['dev', 'prod'],
-  // })
+  if (process.env.OPENAI_API_KEY === undefined) {
+    console.log(
+      chalk.red(
+        'You need to set the OPENAI_API_KEY environment variable to use this app.\n(Create a ".env" file in the root directory and add OPENAI_API_KEY = your_api_key)'
+      )
+    )
+    process.exit(1)
+  }
+
+  const { mode } = await inquirer.prompt({
+    type: 'list',
+    name: 'mode',
+    message: 'Select mode',
+    choices: Object.keys(modes),
+  })
+
+  console.log(chalk.green('\nHello I am Epitek! I am here to help you!'), '\n')
+
+  const rl = readline.createInterface({ input, output })
+
   let messages = [
     {
       role: 'system',
-      content:
-        "You are Epitek an informative assistant. You only present facts you are sure about. If you don't know the answer, you say so. You try present condense facts to help out your user.",
-      // "You are a Epitek a helpful assistant. You don't say anything you aren't certain is true. You try to fulfill your user's requests to the fullest extent.",
+      content: modes[mode].systemPrompt,
     },
   ]
   while (true) {
