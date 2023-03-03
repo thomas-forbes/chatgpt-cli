@@ -42,7 +42,7 @@ async function main() {
   if (process.env.OPENAI_API_KEY === undefined) {
     console.log(
       chalk.red(
-        'You need to set the OPENAI_API_KEY environment variable to use this app.\n(Create a ".env" file in the root directory and add OPENAI_API_KEY = your_api_key)'
+        'You need to set the OPENAI_API_KEY environment variable to use this app.\n(Create a ".env" file in the root directory and add OPENAI_API_KEY="your_api_key")'
       )
     )
     process.exit(1)
