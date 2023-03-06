@@ -1,15 +1,19 @@
 #!/usr/bin/env node
 import chalk from 'chalk'
+import * as dotenv from 'dotenv'
 import figlet from 'figlet'
 import gradient from 'gradient-string'
 import inquirer from 'inquirer'
 import { createSpinner } from 'nanospinner'
-import { Configuration, OpenAIApi } from 'openai'
-import * as readline from 'node:readline/promises'
 import { stdin as input, stdout as output } from 'node:process'
+import * as readline from 'node:readline/promises'
+import { Configuration, OpenAIApi } from 'openai'
+import path from 'path'
+import { fileURLToPath } from 'url'
 
-import * as dotenv from 'dotenv'
-dotenv.config()
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+dotenv.config({ path: __dirname + '/.env' })
 
 const sleep = (ms = 1000) => new Promise((resolve) => setTimeout(resolve, ms))
 
