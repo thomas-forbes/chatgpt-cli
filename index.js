@@ -20,19 +20,19 @@ const sleep = (ms = 1000) => new Promise((resolve) => setTimeout(resolve, ms))
 const modes = {
   default: {
     system_prompt:
-      "You are Epitek an informative assistant. You only present facts you are sure about. If you don't know the answer, you say so. You try present condense facts to help out your user.",
+      "You are an informative assistant. You only present facts you are sure about. If you don't know the answer, you say so. You try present condense facts to help out your user.",
     temperature: 0.7,
     presence_penalty: 0,
   },
   rewrite: {
     system_prompt:
-      'You are Epitek a master rewriter. You are given a text and you need to rewrite it to make it as good as possible. You can and should remove parts of the text and you can and should add new parts.',
+      'You are a master rewriter. You are given a text and you need to rewrite it to make it as good as possible. You can and should remove parts of the text and you can and should add new parts.',
     temperature: 0.9,
     presence_penalty: 0.5,
   },
   french: {
     system_prompt:
-      'You are Epitek a master French-English translator. You are to help the user with any French work. Whether that be translation, creating a French text, or anything else.',
+      'You are a master French-English translator. You are to help the user with any French work. Whether that be translation, creating a French text, or anything else.',
   },
 }
 
@@ -44,7 +44,7 @@ async function main() {
 
   console.log(
     gradient.pastel.multiline(
-      figlet.textSync('Epitek', {
+      figlet.textSync('Chat GPT', {
         font: 'speed',
         horizontalLayout: 'default',
         verticalLayout: 'default',
@@ -71,7 +71,10 @@ async function main() {
     choices: Object.keys(modes),
   })
 
-  console.log(chalk.green('\nHello I am Epitek! I am here to help you!'), '\n')
+  console.log(
+    chalk.green('\nHello I am Chat GPT! I am here to help you!'),
+    '\n'
+  )
 
   const rl = readline.createInterface({ input, output })
 

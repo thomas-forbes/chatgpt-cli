@@ -1,5 +1,5 @@
 {
-  "name": "epitek",
+  "name": "chatgpt-cli",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -13,7 +13,7 @@
   "author": "",
   "license": "ISC",
   "bin": {
-    "epitek": "index.js"
+    "chatgpt": "index.js"
   },
   "dependencies": {
     "chalk": "^5.2.0",
