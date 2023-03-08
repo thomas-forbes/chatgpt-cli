@@ -71,11 +71,6 @@ async function main() {
     choices: Object.keys(modes),
   })
 
-  console.log(
-    chalk.green('\nHello I am Chat GPT! I am here to help you!'),
-    '\n'
-  )
-
   const rl = readline.createInterface({ input, output })
 
   // console.log(modes[mode].system_prompt)
