@@ -36,6 +36,8 @@ const modes = {
   },
 }
 
+const models = ['gpt-3.5-turbo', 'gpt-4']
+
 async function main() {
   const configuration = new Configuration({
     apiKey: process.env.OPENAI_API_KEY,
@@ -71,7 +73,14 @@ async function main() {
     choices: Object.keys(modes),
   })
 
-  const rl = readline.createInterface({ input, output })
+  const { model } = await inquirer.prompt({
+    type: 'list',
+    name: 'model',
+    message: 'Select model',
+    choices: models,
+  })
+
+  // const rl = readline.createInterface({ input, output })
 
   // console.log(modes[mode].system_prompt)
   let messages = [
@@ -81,12 +90,17 @@ async function main() {
     },
   ]
   while (true) {
-    const answer = await rl.question(chalk.green(chalk.bold('? ')))
+    // const answer = await rl.question(chalk.green(chalk.bold('? ')))
+    const { answer } = await inquirer.prompt({
+      type: 'editor',
+      name: 'answer',
+      message: 'Prompt:',
+    })
     messages.push({ role: 'user', content: answer })
 
     const spinner = createSpinner('Thinking...').start()
     const { data } = await openai.createChatCompletion({
-      model: 'gpt-3.5-turbo',
+      model: model,
       messages: messages,
       temperature: modes[mode].temperature || modes['default'].temperature,
       presence_penalty:
